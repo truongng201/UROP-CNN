@@ -1,4 +1,5 @@
 from model import Net
+import builtins
 epochs = 100
 # Create the network
 net = Net()
@@ -9,7 +10,9 @@ optimizer = optim.SGD(net.parameters(), lr=0.01)
 # Create the loss function
 criterion = nn.CrossEntropyLoss()
 
-# 
+# Load the data from builtins
+train_loader = builtins.train_loader
+test_loader = builtins.test_loader
 
 # Training loop
 net.train()
