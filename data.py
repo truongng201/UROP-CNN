@@ -8,13 +8,13 @@ class Dataset:
              transforms.Normalize((0.5,), (0.5,))])
 
     def download(self):
-        torchvision.datasets.MNIST(
+        torchvision.datasets.CIFAR10(
             root='./data',
             train=True,
             download=True,
             transform=self.transform
         )
-        torchvision.datasets.MNIST(
+        torchvision.datasets.CIFAR10(
             root='./data',
             train=False,
             download=True,
