@@ -1,5 +1,3 @@
-from argparse import ArgumentParser
-
 import torch
 import torchvision
 import torchvision.transforms as transforms
@@ -20,8 +18,8 @@ class Dataset:
     def __load_dataset(self, data_dir):
         self.train_dataset = torchvision.datasets.CIFAR10(
                 root=data_dir, 
-                train=True,
-                download=True,
+                train=true,
+                download=true,
                 transform=self.transform
         )
         self.test_dataset= torchvision.datasets.CIFAR10(
@@ -50,12 +48,4 @@ class Dataset:
         self.__data_loader(batch_size)
         return self.train_loader, self.test_loader
 
-if __name__ == '__main__':
-    parser = ArgumentParser()
-    parser.add_argument('--data-dir', type=str, default='../data')
-    parser.add_argument('--batch-size', type=int, default=64)
-    args = parser.parse_args()
-    dataset = Dataset()
-    global train_loader, test_loader
-    train_loader, test_loader =dataset.execute(args.data_dir, args.batch_size)
-    print('Done!')
+
