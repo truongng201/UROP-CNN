@@ -3,7 +3,7 @@ import builtins
 
 import torchvision
 import torchvision.transforms as transforms
-import torch.utils.data.DataLoader as DataLoader
+from torch.utils.data import DataLoader
 
 
 class Dataset:
