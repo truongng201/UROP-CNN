@@ -1,4 +1,4 @@
-DATA_DIR = 'data'
+DATA_DIR='data'
 
 if [ ! -d $DATA_DIR ]; then
   mkdir $DATA_DIR
