@@ -1,5 +1,12 @@
-from model import Net
 import builtins
+
+from model import Net
+
+import torch
+import torch.optim as optim
+import torch.nn as nn
+
+
 epochs = 100
 # Create the network
 net = Net()
