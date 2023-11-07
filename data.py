@@ -1,4 +1,4 @@
-from argparse import ArguemntParser
+from argparse import ArgumentParser
 import torchvision
 import torchvision.transforms as transforms
 
@@ -23,7 +23,7 @@ class Dataset:
         )
 
 
-parser = ArguemntParser()
+parser = ArgumentParser()
 parser.add_argument("--data-dir", type=str, default="../data")
 args = parser.parse_args()
 Dataset().download(args.data_dir)
