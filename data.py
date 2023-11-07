@@ -54,5 +54,6 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=64)
     args = parser.parse_args()
     dataset = Dataset()
-    global train_loader, test_loader =dataset.execute(args.data_dir, args.batch_size)
+    global train_loader, test_loader
+    train_loader, test_loader =dataset.execute(args.data_dir, args.batch_size)
     print('Done!')
