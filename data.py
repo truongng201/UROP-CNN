@@ -9,13 +9,13 @@ class Dataset:
 
     def download(self):
         torchvision.datasets.CIFAR10(
-            root='./data',
+            root='../data',
             train=True,
             download=True,
             transform=self.transform
         )
         torchvision.datasets.CIFAR10(
-            root='./data',
+            root='../data',
             train=False,
             download=True,
             transform=self.transform
