@@ -1,4 +1,4 @@
-from arg import ArguemntParser
+from argparse import ArguemntParser
 import torchvision
 import torchvision.transforms as transforms
 
