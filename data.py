@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-import builtins
 
 import torchvision
 import torchvision.transforms as transforms
@@ -13,7 +12,8 @@ class Dataset:
              transforms.Normalize((0.5,), (0.5,))])
         self.train_dataset = None
         self.test_dataset = None
-    
+        self.train_loader = None
+        self.test_loader = None
 
     def __load_dataset(self, data_dir):
         self.train_dataset = torchvision.datasets.CIFAR10(
@@ -31,30 +31,28 @@ class Dataset:
 
 
     def __data_loader(self, bach_size):
-        train_loader = torch.utils.data.DataLoader(
+        self.train_loader = torch.utils.data.DataLoader(
             dataset=self.train_dataset,
             batch_size=bath_size,
             shuffle=True
         )
-        test_loader = torch.utils.data.DataLoader(
+        self.test_loader = torch.utils.data.DataLoader(
             dataset=self.test_dataset,
             batch_size=batch_size,
             shuffle=False
         )
-        builtins.train_loader = train_loader
-        builtins.test_loader = test_loader
 
 
     def execute(self, data_dir, batch_size):
         self.load_dataset(data_dir)
         self.data_loader(batch_size)
-
+        return self.train_loader, self.test_loader
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default='../data')
-    parser.add_argument('--batch_size', type=int, default=64)
+    parser.add_argument('--data-dir', type=str, default='../data')
+    parser.add_argument('--batch-size', type=int, default=64)
     args = parser.parse_args()
     dataset = Dataset()
-    dataset.execute(args.data_dir, args.batch_size)
+    global train_loader, test_loader =dataset.execute(args.data_dir, args.batch_size)
     print('Done!')

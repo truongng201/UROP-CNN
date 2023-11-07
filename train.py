@@ -1,6 +1,7 @@
 import builtins
 
 from model import Net
+import data
 
 import torch
 import torch.optim as optim
@@ -18,8 +19,8 @@ optimizer = optim.SGD(net.parameters(), lr=0.01)
 criterion = nn.CrossEntropyLoss()
 
 # Load the data from builtins
-train_loader = builtins.train_loader
-test_loader = builtins.test_loader
+train_loader = data.train_loader
+test_loader = data.test_loader
 
 # Training loop
 net.train()
