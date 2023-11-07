@@ -9,13 +9,13 @@ class Dataset:
              transforms.Normalize((0.5,), (0.5,))])
 
     def download(self, data_dir):
-        torchvision.sets.CIFAR10(
+        torchvision.datasets.CIFAR10(
             root=data_dir,
             train=True,
             download=True,
             transform=self.transform
         )
-        torchvision.sets.CIFAR10(
+        torchvision.datasets.CIFAR10(
             root=data_dir,
             train=False,
             download=True,
