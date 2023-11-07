@@ -44,8 +44,8 @@ class Dataset:
 
 
     def execute(self, data_dir, batch_size):
-        self.load_dataset(data_dir)
-        self.data_loader(batch_size)
+        self.__load_dataset(data_dir)
+        self.__data_loader(batch_size)
         return self.train_loader, self.test_loader
 
 if __name__ == '__main__':
