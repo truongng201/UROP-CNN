@@ -18,7 +18,7 @@ criterion = nn.CrossEntropyLoss()
 
 # Create the data loader
 train_loader, test_loader = Dataset().execute('../data', 64)
-
+print(train_loader)
 # Training loop
 net.train()
 for epoch in range(epochs):
