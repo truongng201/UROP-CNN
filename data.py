@@ -18,14 +18,14 @@ class Dataset:
     def __load_dataset(self, data_dir):
         self.train_dataset = torchvision.datasets.CIFAR10(
                 root=data_dir, 
-                train=true,
-                download=true,
+                train=True,
+                download=False,
                 transform=self.transform
         )
         self.test_dataset= torchvision.datasets.CIFAR10(
                 root=data_dir, 
                 train=False,
-                download=True,
+                download=False,
                 transform=self.transform
         )
 
