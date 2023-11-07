@@ -16,6 +16,7 @@ class Dataset:
         self.train_loader = None
         self.test_loader = None
 
+
     def __load_dataset(self, data_dir):
         self.train_dataset = torchvision.datasets.CIFAR10(
                 root=data_dir, 
@@ -31,10 +32,10 @@ class Dataset:
         )
 
 
-    def __data_loader(self, bach_size):
+    def __data_loader(self, batch_size):
         self.train_loader = torch.utils.data.DataLoader(
             dataset=self.train_dataset,
-            batch_size=bath_size,
+            batch_size=batch_size,
             shuffle=True
         )
         self.test_loader = torch.utils.data.DataLoader(
