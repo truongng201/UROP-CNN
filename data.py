@@ -41,11 +41,19 @@ class Dataset:
             batch_size=batch_size,
             shuffle=False
         )
+    
+
+    def __dataset_info(self):
+        print(f"Train dataset size: {len(self.train_dataset)}")
+        print(f"Test dataset size: {len(self.test_dataset)}")
+        print(f"Train loader size: {len(self.train_loader)}")
+        print(f"Test loader size: {len(self.test_loader)}")
 
 
     def execute(self, data_dir, batch_size):
         self.__load_dataset(data_dir)
         self.__data_loader(batch_size)
+        self.__dataset_info()
         return self.train_loader, self.test_loader
 
 
