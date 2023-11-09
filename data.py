@@ -44,11 +44,13 @@ class Dataset:
     
 
     def __dataset_info(self):
-        print(f"Train dataset size: {len(self.train_dataset)}")
-        print(f"Test dataset size: {len(self.test_dataset)}")
-        print(f"Train loader size: {len(self.train_loader)}")
-        print(f"Test loader size: {len(self.test_loader)}")
-
+        print("-"*50)
+        print("Dataset information:")
+        print(f"Train dataset: {self.train_loader.dataset}")
+        print(f"Test dataset: {self.test_loader.dataset}")
+        print(f"Train batch size: {self.train_loader.batch_size}")
+        print(f"Test batch size: {self.test_loader.batch_size}")
+        print("-"*50)
 
     def execute(self, data_dir, batch_size):
         self.__load_dataset(data_dir)
