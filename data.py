@@ -71,7 +71,7 @@ class Dataset:
         print("-"*50)
 
 
-    def execute(self, data_dir, batch_size, val_split):
+    def execute(self, data_dir='./data', batch_size=64, val_split=0.25):
         self.__load_dataset(data_dir)
         self.__split_train_dataset(val_split)
         self.__data_loader(batch_size)

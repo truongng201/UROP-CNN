@@ -14,10 +14,10 @@ if __name__ == '__main__':
     arg.add_argument('--epochs', type=int, default=100, help='number of epochs to train (default: 100)')
     arg.add_argument('--batch_size', type=int, default=64, help='input batch size for training (default: 64)')
     arg.add_argument('--lr', type=float, default=0.001, help='learning rate (default: 0.01)')
-    arg.add_argument('--data-dir', type=str, default='../data', help='path to dataset (default: ../data)')
+    arg.add_argument('--data-dir', type=str, default='./data', help='path to dataset (default: ./data)')
     arg.add_argument('--log-interval', type=int, default=100, help='how many batches to wait before logging training status')
     arg.add_argument('--save-model', action='store_true', default=False, help='for saving the current model')
-
+    arg.add_argument('--val-split', type=float, default=0.25, help='validation split (default: 0.25)')
 
 args = arg.parse_args()
 
@@ -28,6 +28,7 @@ lr = args.lr
 data_dir = args.data_dir
 log_interval = args.log_interval
 save_model = args.save_model
+val_split = args.val_split
 
 # Initialize model
 net = Net()
@@ -39,7 +40,7 @@ optimizer = optim.SGD(net.parameters(), lr=lr)
 criterion = nn.CrossEntropyLoss()
 
 # Create the data loader
-train_loader, test_loader = Dataset().execute(data_dir, batch_size)
+train_loader, test_loader = Dataset().execute(data_dir, batch_size, val_split)
 
 # Training loop
 net.train()
