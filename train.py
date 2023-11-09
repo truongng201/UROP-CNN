@@ -12,8 +12,8 @@ import torch.nn as nn
 if __name__ == '__main__':
     arg = ArgumentParser()
     arg.add_argument('--epochs', type=int, default=100, help='number of epochs to train (default: 100)')
-    arg.add_argument('--batch_size', type=int, default=64, help='input batch size for training (default: 64)')
-    arg.add_argument('--lr', type=float, default=0.001, help='learning rate (default: 0.01)')
+    arg.add_argument('--batch-size', type=int, default=64, help='input batch size for training (default: 64)')
+    arg.add_argument('--lr', type=float, default=0.001, help='learning rate (default: 0.001)')
     arg.add_argument('--data-dir', type=str, default='./data', help='path to dataset (default: ./data)')
     arg.add_argument('--log-interval', type=int, default=100, help='how many batches to wait before logging training status')
     arg.add_argument('--save-model', action='store_true', default=False, help='for saving the current model')
