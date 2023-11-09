@@ -1,3 +1,5 @@
+from argparse import ArgumentParser
+
 from model import Net
 from data import Dataset
 
@@ -6,19 +8,39 @@ import torch.optim as optim
 import torch.nn as nn
 
 
-epochs = 100
-# Create the network
+
+if __name__ == '__main__':
+    arg = ArgumentParser()
+    arg.add_argument('--epochs', type=int, default=100, help='number of epochs to train (default: 100)')
+    arg.add_argument('--batch_size', type=int, default=64, help='input batch size for training (default: 64)')
+    arg.add_argument('--lr', type=float, default=0.001, help='learning rate (default: 0.01)')
+    arg.add_argument('--data-dir', type=str, default='../data', help='path to dataset (default: ../data)')
+    arg.add_argument('--log-interval', type=int, default=100, help='how many batches to wait before logging training status')
+    arg.add_argument('--save-model', action='store_true', default=False, help='for saving the current model')
+
+
+args = arg.parse_args()
+
+# Training settings
+epochs = args.epochs
+batch_size = args.batch_size
+lr = args.lr
+data_dir = args.data_dir
+log_interval = args.log_interval
+save_model = args.save_model
+
+# Initialize model
 net = Net()
 
 # Create the optimizer
-optimizer = optim.SGD(net.parameters(), lr=0.01)
+optimizer = optim.SGD(net.parameters(), lr=lr)
 
 # Create the loss function
 criterion = nn.CrossEntropyLoss()
 
 # Create the data loader
-train_loader, test_loader = Dataset().execute('../data', 64)
-print(train_loader)
+train_loader, test_loader = Dataset().execute(data_dir, batch_size)
+
 # Training loop
 net.train()
 for epoch in range(epochs):
@@ -28,11 +50,10 @@ for epoch in range(epochs):
         loss = criterion(output, target)
         loss.backward()
         optimizer.step()
-        if batch_idx % 100 == 0:
-            print("Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}".format(
-                epoch,
-                batch_idx * len(data),
-                len(train_loader.dataset),
-                100.0 * batch_idx / len(train_loader),
-                loss.item()
-            ))
+    accuracy = 100 * (output.argmax(1) == target).sum().item() / len(data)
+
+    print(f"Epoch: {epoch} | Loss: {loss.item()} | Accuracy: {accuracy}")
+
+# Save the model
+if save_model:
+    torch.save(net.state_dict(), "cifar10_net.pt")
