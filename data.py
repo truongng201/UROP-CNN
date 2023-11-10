@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
 import torch
 import torchvision
 import torchvision.transforms as transforms
@@ -68,6 +70,8 @@ class Dataset:
         print("-"*50)
         print("--------------- Dataset Information --------------")
         print("-"*50)
+        print(f"All classes : {self.dataset.classes}")
+        print("       -----------------------------------       ")
         print(f"Train dataset size: {len(self.train_loader.dataset)}")
         print(f"Train batch size: {self.train_loader.batch_size}")
         print(f"Train input shape: {self.__get_shape(self.train_loader)[0]}")
@@ -88,10 +92,16 @@ class Dataset:
         print()
         print()
 
+    
+    def __show_examples(self, img, label):
+        print('Label: ', self.dataset.classes[label], "("+str(label)+")")
+        plt.imshow(img.permute(1, 2, 0))
+
 
     def execute(self, data_dir='./data', batch_size=64, train_split=0.7, val_split=0.1, test_split=0.2):
         self.__load_dataset(data_dir)
         self.__split_dataset(train_split, val_split, test_split)
         self.__data_loader(batch_size)
         self.__dataset_info()
+        self.__show_examples(*self.dataset[0])
         return self.train_loader, self.test_loader
