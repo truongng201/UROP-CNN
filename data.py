@@ -103,5 +103,5 @@ class Dataset:
         self.__split_dataset(train_split, val_split, test_split)
         self.__data_loader(batch_size)
         self.__dataset_info()
-        self.__show_examples(*self.dataset[0])
+        # self.__show_examples(*self.dataset[0])
         return self.train_loader, self.test_loader
