@@ -37,10 +37,6 @@ test_split = args.test_split
 # Initialize model
 net = Net()
 
-# Create the optimizer
-optimizer = optim.SGD(net.parameters(), lr=lr)
-
-# Create the loss function
 criterion = nn.CrossEntropyLoss()
 
 # Create the data loader
@@ -58,7 +54,7 @@ def evaluate(model, val_loader):
     outputs = [model.validation_step(batch) for batch in val_loader]
     return model.validation_epoch_end(outputs)
 
-def fit(epochs, lr, model, train_loader, val_loader, opt_func=optimizer):
+def fit(epochs, lr, model, train_loader, val_loader, opt_func=torch.optim.SGD):
     history = []
     optimizer = opt_func(model.parameters(), lr)
     for epoch in range(epochs):
