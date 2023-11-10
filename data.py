@@ -16,11 +16,11 @@ class Dataset:
         self.dataset = None
 
         self.train_dataset = None
-        self.validation_dataset = None
+        self.val_dataset = None
         self.test_dataset = None
 
         self.train_loader = None
-        self.validation_loader = None
+        self.val_loader = None
         self.test_loader = None
 
 
@@ -32,12 +32,12 @@ class Dataset:
         )
 
     
-    def __split_dataset(self, train_split, validation_split, test_split):
+    def __split_dataset(self, train_split, val_split, test_split):
         train_size = int(train_split * len(self.dataset))
-        validation_size = int(validation_split * len(self.dataset))
+        val_size = int(val_split * len(self.dataset))
         test_size = int(test_split * len(self.dataset))
-        self.train_dataset, self.validation_dataset, self.test_dataset = random_split(
-            self.dataset, [train_size, validation_size, test_size]
+        self.train_dataset, self.val_dataset , self.test_dataset = random_split(
+            self.dataset, [train_size, val_size, test_size]
         )
 
     
@@ -54,8 +54,8 @@ class Dataset:
             batch_size=batch_size,
             shuffle=True
         )
-        self.validation_loader = DataLoader(
-            dataset=self.validation_dataset,
+        self.val_loader = DataLoader(
+            dataset=self.val_dataset,
             batch_size=batch_size,
             shuffle=False
         )
@@ -77,10 +77,10 @@ class Dataset:
         print(f"Train input shape: {self.__get_shape(self.train_loader)[0]}")
         print(f"Train label shape: {self.__get_shape(self.train_loader)[1]}")
         print("       -----------------------------------       ")
-        print(f"Validation dataset size: {len(self.validation_loader.dataset)}")
-        print(f"Validation batch size: {self.validation_loader.batch_size}")
-        print(f"Validation input shape: {self.__get_shape(self.validation_loader)[0]}")
-        print(f"Validation label shape: {self.__get_shape(self.validation_loader)[1]}")
+        print(f"Validation dataset size: {len(self.val_loader.dataset)}")
+        print(f"Validation batch size: {self.val_loader.batch_size}")
+        print(f"Validation input shape: {self.__get_shape(self.val_loader)[0]}")
+        print(f"Validation label shape: {self.__get_shape(self.val_loader)[1]}")
         print("       -----------------------------------       ")
         print(f"Test dataset size: {len(self.test_loader.dataset)}")
         print(f"Test batch size: {self.test_loader.batch_size}")
@@ -104,4 +104,4 @@ class Dataset:
         self.__data_loader(batch_size)
         self.__dataset_info()
         # self.__show_examples(*self.dataset[0])
-        return self.train_loader, self.test_loader
+        return self.train_loader, self.val_loader, self.test_loader

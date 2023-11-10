@@ -44,7 +44,7 @@ optimizer = optim.SGD(net.parameters(), lr=lr)
 criterion = nn.CrossEntropyLoss()
 
 # Create the data loader
-train_loader, test_loader = Dataset().execute(
+train_loader, test_loader, val_loader = Dataset().execute(
     data_dir,
     batch_size,
     train_split,
@@ -52,19 +52,42 @@ train_loader, test_loader = Dataset().execute(
     test_split
 )
 
-# Training loop
-net.train()
-for epoch in range(epochs):
-    for batch_idx, (data, target) in enumerate(train_loader):
-        optimizer.zero_grad()
-        output = net(data)
-        loss = criterion(output, target)
-        loss.backward()
-        optimizer.step()
-    accuracy = 100 * (output.argmax(1) == target).sum().item() / len(data)
+@torch.no_grad()
+def evaluate(model, val_loader):
+    model.eval()
+    outputs = [model.validation_step(batch) for batch in val_loader]
+    return model.validation_epoch_end(outputs)
 
-    print(f"Epoch: {epoch} | Loss: {loss.item()} | Accuracy: {accuracy}")
+def fit(epochs, lr, model, train_loader, val_loader, opt_func=optimizer):
+    history = []
+    optimizer = opt_func(model.parameters(), lr)
+    for epoch in range(epochs):
+        # Training Phase 
+        model.train()
+        train_losses = []
+        for batch in train_loader:
+            loss = model.training_step(batch)
+            train_losses.append(loss)
+            loss.backward()
+            optimizer.step()
+            optimizer.zero_grad()
+        # Validation phase
+        result = evaluate(model, val_loader)
+        result['train_loss'] = torch.stack(train_losses).mean().item()
+        model.epoch_end(epoch, result)
+        history.append(result)
+    return history
 
-# Save the model
-if save_model:
-    torch.save(net.state_dict(), "cifar10_net.pt")
+# See the model's performance before training
+evaluate(net, train_loader)
+# Train the model
+history = fit(epochs, lr, net, train_loader, val_loader)
+
+def plot_accuracies(history):
+    accuracies = [x['val_acc'] for x in history]
+    plt.plot(accuracies, '-x')
+    plt.xlabel('epoch')
+    plt.ylabel('accuracy')
+    plt.title('Accuracy vs. No. of epochs');
+
+plot_accuracies(history)
