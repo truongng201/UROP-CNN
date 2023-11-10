@@ -57,13 +57,13 @@ class Dataset:
     def __dataset_info(self):
         print("-"*50)
         print("--------------- Dataset Information ---------------")
-        print(f"Train dataset: {self.train_loader.dataset}")
+        print(f"Train dataset: {self.train_loader.dataset.dataset}")
         print(f"Train batch size: {self.train_loader.batch_size}")
         print("-----------------------------------")
-        print(f"Validation dataset: {self.validation_loader.dataset}")
+        print(f"Validation dataset: {self.validation_loader.dataset.dataset}")
         print(f"Validation batch size: {self.validation_loader.batch_size}")
         print("-----------------------------------")
-        print(f"Test dataset: {self.test_loader.dataset}")
+        print(f"Test dataset: {self.test_loader.dataset.dataset}")
         print(f"Test batch size: {self.test_loader.batch_size}")
         print("-"*50)
 
