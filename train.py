@@ -67,6 +67,7 @@ def fit(epochs, lr, model, train_loader, val_loader, opt_func=torch.optim.SGD):
             loss.backward()
             optimizer.step()
             optimizer.zero_grad()
+            print(f"Batch loss: {loss.item()}", end="\r")
         # Validation phase
         result = evaluate(model, val_loader)
         result['train_loss'] = torch.stack(train_losses).mean().item()
