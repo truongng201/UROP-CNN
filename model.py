@@ -8,20 +8,30 @@ class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         self.network = nn.Sequential(
-            # 3 input image channel, 64 output channels, 3x3 square convolution, stride of 1, padding of 1
-            nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1), # 64x32x32x3 -> 64x32x32x64
-            nn.ReLU(), # activation function (relu) -> 64x32x32x64
-            nn.MaxPool2d(2, 2), # max pooling layer 2x2 -> 64x16x16x64
-            # 64 input image channel, 128 output channels, 5x5 square convolution, stride of 1, padding of 1
-            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1), # 64x16x16x64 -> 128x16x16x64
-            nn.ReLU(), # activation function (relu) -> 128x16x16x64
-            nn.MaxPool2d(2, 2), # max pooling layer 2x2 -> 128x8x8x64
-            nn.Flatten(), # flatten -> 128x8x8x64 -> 128x4096
-            nn.Linear(128 * 8 * 8, 512), # fully connected layer (128 * 8 * 8 inputs -> 512 outputs)
-            nn.ReLU(), # activation function (relu) -> 128x4096 -> 128x512
-            nn.Linear(512, 128), # fully connected layer (512 inputs -> 128 outputs)
-            nn.ReLU(), # activation function (relu) -> 128x512 -> 128x128
-            nn.Linear(128, 10) # fully connected layer (128 inputs -> 10 outputs)
+            nn.Conv2d(3, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2), # output: 64 x 16 x 16
+
+            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2), # output: 128 x 8 x 8
+
+            nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2), # output: 256 x 4 x 4
+
+            nn.Flatten(), 
+            nn.Linear(256*4*4, 1024),
+            nn.ReLU(),
+            nn.Linear(1024, 512),
+            nn.ReLU(),
+            nn.Linear(512, 10)
         )
 
     
